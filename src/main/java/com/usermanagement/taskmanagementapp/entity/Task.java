@@ -5,21 +5,22 @@ import com.usermanagement.taskmanagementapp.utils.TaskStatus;
 import jakarta.persistence.*;
 
 @Entity
+@Table(name = "tasks")
 public class Task {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long taskId;
 
     private String name;
     private String description;
 
-    public Long getId() {
-        return id;
+    public Long getTaskId() {
+        return taskId;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setTaskId(Long id) {
+        this.taskId = id;
     }
 
     public String getName() {

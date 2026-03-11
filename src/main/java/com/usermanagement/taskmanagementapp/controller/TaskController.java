@@ -8,11 +8,12 @@ import com.usermanagement.taskmanagementapp.repository.TaskRepository;
 import com.usermanagement.taskmanagementapp.service.TaskService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping
+@RequestMapping("/tasks")
 public class TaskController {
 
     private TaskService taskService;
@@ -21,9 +22,8 @@ public class TaskController {
         this.taskService = taskService;
     }
 
-    @PostMapping("/tasks")
-    public TaskResponse createTask(CreateTaskRequest request) {
-
+    @PostMapping()
+    public TaskResponse createTask(@RequestBody CreateTaskRequest request) {
         return taskService.createTask(request);
     }
 

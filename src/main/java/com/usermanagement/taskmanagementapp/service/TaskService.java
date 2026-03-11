@@ -43,7 +43,7 @@ public class TaskService {
 
         TaskResponse response = new TaskResponse();
 
-        response.setId(task.getId());
+        response.setId(task.getTaskId());
         response.setName(task.getName());
         response.setDescription(task.getDescription());
         response.setStatus(task.getStatus());
