@@ -4,7 +4,6 @@ import com.usermanagement.taskmanagementapp.dto.project.CreateProjectRequest;
 import com.usermanagement.taskmanagementapp.dto.project.ProjectResponse;
 import com.usermanagement.taskmanagementapp.service.ProjectService;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 
 
@@ -33,6 +32,5 @@ public class ProjectController {
     public String test() {
         return "Project controller working";
     }
-
 
 }

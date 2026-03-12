@@ -7,6 +7,8 @@ import com.usermanagement.taskmanagementapp.service.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/users")
 public class UserController {
@@ -22,8 +24,9 @@ public class UserController {
         return userService.createUser(request);
     }
 
-    @GetMapping
-    public String test() {
-        return "Users endpoint working";
+    @GetMapping()
+    public List<UserResponse> getAllUser() {
+        return userService.getAllUsers();
     }
+
 }

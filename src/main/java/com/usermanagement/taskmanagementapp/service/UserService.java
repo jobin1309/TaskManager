@@ -6,6 +6,8 @@ import com.usermanagement.taskmanagementapp.entity.User;
 import com.usermanagement.taskmanagementapp.repository.UserRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class UserService {
 
@@ -24,6 +26,12 @@ public class UserService {
 
         return mapToUserResponse(savedUser);
 
+    }
+
+
+    public List<UserResponse> getAllUsers() {
+       List<User> users = userRepository.findAll();
+       return users.stream().map(this::mapToUserResponse).toList();
     }
 
     private UserResponse mapToUserResponse(User user) {

@@ -45,13 +45,10 @@ public class ProjectService {
     }
 
     public List<ProjectResponse> getProjectsByUser(Long userId) {
-
         List<Project> projects = projectRepository.findByUserId(userId);
-
         return projects.stream()
                 .map(this::mapToProjectResponse)
                 .toList();
     }
-
 }
 
