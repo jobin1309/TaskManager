@@ -2,6 +2,9 @@ package com.usermanagement.taskmanagementapp.dto.auth;
 
 public class LoginRequest {
 
+    private String email;
+    private String password;
+
     public String getPassword() {
         return password;
     }
@@ -18,7 +21,6 @@ public class LoginRequest {
         this.email = email;
     }
 
-    private String email;
-    private String password;
+
 
 }

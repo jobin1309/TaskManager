@@ -42,5 +42,4 @@ public class JwtService {
         return extractEmail(token).equals(email);
     }
 
-
 }
