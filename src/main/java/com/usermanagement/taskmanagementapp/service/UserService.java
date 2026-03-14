@@ -4,6 +4,7 @@ import com.usermanagement.taskmanagementapp.dto.auth.RegisterRequest;
 import com.usermanagement.taskmanagementapp.dto.auth.UserResponse;
 import com.usermanagement.taskmanagementapp.entity.User;
 import com.usermanagement.taskmanagementapp.repository.UserRepository;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -12,15 +13,17 @@ import java.util.List;
 public class UserService {
 
     private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
 
-    public UserService(UserRepository userRepository) {
+    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     public UserResponse createUser(RegisterRequest request) {
         User user = new User();
         user.setEmail(request.getEmail());
-        user.setPassword(request.getPassword());
+        user.setPassword(passwordEncoder.encode(request.getPassword()));
         user.setUsername(request.getUsername());
         User savedUser = userRepository.save(user);
 

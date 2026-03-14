@@ -19,8 +19,8 @@ public class ProjectController {
     }
 
     @PostMapping
-    public ProjectResponse createProject(@RequestBody CreateProjectRequest request) {
-      return projectService.createProject(request);
+    public String createProject(@RequestBody CreateProjectRequest request) {
+        return "created";
     }
 
     @GetMapping("/user/{userId}")
