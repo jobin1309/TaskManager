@@ -7,6 +7,9 @@ import com.usermanagement.taskmanagementapp.entity.Project;
 import com.usermanagement.taskmanagementapp.entity.User;
 import com.usermanagement.taskmanagementapp.repository.ProjectRepository;
 import com.usermanagement.taskmanagementapp.repository.UserRepository;
+import jdk.swing.interop.SwingInterOpUtils;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -24,7 +27,11 @@ public class ProjectService {
 
     public ProjectResponse createProject(CreateProjectRequest request) {
 
-        User user = userRepository.findById(request.getUserId())
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        assert auth != null;
+        String userEmail = auth.getName();
+
+        User user = userRepository.findUserByEmail(userEmail)
                 .orElseThrow(() -> new RuntimeException("User not found"));
 
         Project project = new Project();
@@ -37,9 +44,11 @@ public class ProjectService {
 
     private ProjectResponse mapToProjectResponse(Project project) {
         ProjectResponse projectResponse = new ProjectResponse();
+        Long userId = project.getUser().getId();
+        System.out.println(userId);
         projectResponse.setProjectId(project.getId());
         projectResponse.setName(project.getName());
-        projectResponse.setUserId(project.getUser().getId());
+        projectResponse.setUserId(userId);
         projectResponse.setDescription(project.getDescription());
         return projectResponse;
     }

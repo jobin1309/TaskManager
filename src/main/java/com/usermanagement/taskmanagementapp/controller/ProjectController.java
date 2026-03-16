@@ -13,14 +13,13 @@ public class ProjectController {
 
     private final ProjectService projectService;
 
-
     public ProjectController(ProjectService projectService) {
         this.projectService = projectService;
     }
 
     @PostMapping
-    public String createProject(@RequestBody CreateProjectRequest request) {
-        return "created";
+    public ProjectResponse createProject(@RequestBody CreateProjectRequest request) {
+        return projectService.createProject(request);
     }
 
     @GetMapping("/user/{userId}")
