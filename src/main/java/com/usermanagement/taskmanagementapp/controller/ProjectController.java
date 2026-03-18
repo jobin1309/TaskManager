@@ -3,6 +3,7 @@ package com.usermanagement.taskmanagementapp.controller;
 import com.usermanagement.taskmanagementapp.dto.project.CreateProjectRequest;
 import com.usermanagement.taskmanagementapp.dto.project.ProjectResponse;
 import com.usermanagement.taskmanagementapp.service.ProjectService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
@@ -25,6 +26,12 @@ public class ProjectController {
     @GetMapping("/user/{userId}")
     public List<ProjectResponse> getProjectsByUser(@PathVariable Long userId) {
         return projectService.getProjectsByUser(userId);
+
+    }
+
+    public ResponseEntity<String> deleteProjectByUser(@PathVariable Long userId) {
+        projectService.deleteProject(userId);
+        return ResponseEntity.ok("Project successfully deleted");
     }
 
     @GetMapping

@@ -8,9 +8,11 @@ import com.usermanagement.taskmanagementapp.entity.User;
 import com.usermanagement.taskmanagementapp.repository.ProjectRepository;
 import com.usermanagement.taskmanagementapp.repository.UserRepository;
 import jdk.swing.interop.SwingInterOpUtils;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
@@ -42,6 +44,25 @@ public class ProjectService {
         return mapToProjectResponse(savedProject);
     }
 
+    public void deleteProject(Long projectId) {
+
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        assert auth != null;
+        String userEmail = auth.getName();
+
+        User user = userRepository.findUserByEmail(userEmail)
+                .orElseThrow( () ->  new RuntimeException("User not found"));
+
+        Project project = projectRepository.findById(projectId).orElseThrow(() ->
+                new RuntimeException(" Project not found"));
+
+        if(user.getId().equals(project.getUser().getId())) {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN);
+        }
+       projectRepository.deleteById(projectId);
+    }
+
+
     private ProjectResponse mapToProjectResponse(Project project) {
         ProjectResponse projectResponse = new ProjectResponse();
         Long userId = project.getUser().getId();
@@ -52,6 +73,7 @@ public class ProjectService {
         projectResponse.setDescription(project.getDescription());
         return projectResponse;
     }
+
 
     public List<ProjectResponse> getProjectsByUser(Long userId) {
         List<Project> projects = projectRepository.findByUserId(userId);
